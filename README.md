@@ -395,7 +395,7 @@ GROUP BY month
 The lowest and highest prices that Apple stock achieved between 2005 and 2010 (inclusive).
 SELECT MIN(close) AS min_close, MAX(close) AS max_close
 FROM tutorial.aapl_historical_stock_price
-WHERE year <= 2010 AND year >=2005 
+WHERE year <= 2010 AND year >=2005
 
 
 
@@ -408,12 +408,28 @@ GROUP BY year, month
 
 
 All months in the second half of the year where average daily trading volume was below 10,000,000.
-
+  ```
+  SELECT year, month
+  FROM tutorial.aapl_historical_stock_price
+  WHERE month > 6
+  GROUP BY year, month
+  HAVING AVG(volume) > 10000000
+  ```
 
 A list of all calendar months by average daily trading volume (so only 12 rows), sorted from highest to lowest.
+  ```
+  SELECT month, AVG(volume)
+  FROM tutorial.aapl_historical_stock_price
+  GROUP BY month
+  ORDER BY AVG(volume) DESC
+  ```
+
 
 Count how many unique months there are in the data set (should equal 12)
-
+    SELECT subquery.SUM(count)
+    FROM ( SELECT COUNT(*)
+    FROM tutorial.aapl_historical_stock_price
+    GROUP BY month) AS subquery
 
 Count how many unique years there are in the data set
 
@@ -424,7 +440,7 @@ Count how many unique prices there are in the data set
 Return the percentage of unique "open" prices compared to all open prices in the data set
 
 
-A listing of all months by their average daily trading volume and a classification that puts this 
+A listing of all months by their average daily trading volume and a classification that puts this
 volume into the following categories: "Low" = below 10MM, "Medium" = 10-25 MM, "High" = above 25MM
 
 
