@@ -386,14 +386,49 @@ The average price of days with a trading volume above 25,000,000 shares (just 1 
   145.76535096642928
 
 The average price on all months with an average daily trading volume above 10,000,000 shares.
+SELECT AVG(close)
+FROM tutorial.aapl_historical_stock_price
+WHERE volume > 10000000
+GROUP BY month
+
+
 The lowest and highest prices that Apple stock achieved between 2005 and 2010 (inclusive).
+SELECT MIN(close) AS min_close, MAX(close) AS max_close
+FROM tutorial.aapl_historical_stock_price
+WHERE year <= 2010 AND year >=2005 
+
+
+
 The average daily trading range in months where the stock moved more than $25 (open of month to close of month)
+SELECT year, month, AVG(close)
+FROM tutorial.aapl_historical_stock_price
+WHERE  (close - open) > 25 OR (open - close) > 25
+GROUP BY year, month
+
+
+
 All months in the second half of the year where average daily trading volume was below 10,000,000.
+
+
 A list of all calendar months by average daily trading volume (so only 12 rows), sorted from highest to lowest.
+
 Count how many unique months there are in the data set (should equal 12)
+
+
 Count how many unique years there are in the data set
+
+
 Count how many unique prices there are in the data set
+
+
 Return the percentage of unique "open" prices compared to all open prices in the data set
-A listing of all months by their average daily trading volume and a classification that puts this volume into the following categories: "Low" = below 10MM, "Medium" = 10-25 MM, "High" = above 25MM
+
+
+A listing of all months by their average daily trading volume and a classification that puts this 
+volume into the following categories: "Low" = below 10MM, "Medium" = 10-25 MM, "High" = above 25MM
+
+
 A listing of average monthly price plus which quarter of the year they are in (e.g. "Q2" or "Q4").
+
+
 This same listing filtered for only Q4 (use the new column not the months explicitly as part of this filtering).
