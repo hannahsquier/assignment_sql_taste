@@ -214,18 +214,100 @@ WHERE  year = 1985 AND
 ```
 
 All number 1 songs in the data set.
+SELECT song_name
+FROM tutorial.billboard_top_100_year_end 
+WHERE year_rank = 1
+
 
 
 All rows where the artist is not listed
+SELECT *
+FROM tutorial.billboard_top_100_year_end 
+WHERE "artist" IS null
 
 
 All of Madonna's top 100 hits ordered by their ranking (1 to 100)
+SELECT *
+FROM tutorial.billboard_top_100_year_end 
+WHERE "artist" = 'Madonna'
+ORDER BY year_rank ASC
+
 
 
 All of Madonna's top 100 hits ordered by their ranking within each year
+SELECT *
+FROM tutorial.billboard_top_100_year_end 
+WHERE "artist" = 'Madonna'
+ORDER BY year, year_rank
+
 
 
 Every number 1 song since 1990 followed by every number 2 song since 1990 and number 3 song since
-
-
 1990. (Hint: Multiple ordering)
+
+SELECT *
+FROM tutorial.billboard_top_100_year_end 
+WHERE "year_rank" <= 3 AND year >= 1990
+ORDER BY year_rank, year
+
+
+
+What is the highest position ever reached by Phil Collins?
+SELECT  MIN (year_rank)
+FROM tutorial.billboard_top_100_year_end 
+WHERE artist = 'Phil Collins'
+
+5
+
+What is the average position reached by Michael Jackson?
+SELECT  AVG (year_rank)
+FROM tutorial.billboard_top_100_year_end 
+WHERE artist = 'Michael Jackson'
+
+46
+
+
+Madonna's average position when she actually reached the top 10
+SELECT  AVG (year_rank)
+FROM tutorial.billboard_top_100_year_end 
+WHERE artist = 'Madonna' AND year_rank <= 10
+
+6
+
+
+
+List the top 10 artists based on their number of appearances on this list (and what that number is) 
+since 1985
+SELECT artist, COUNT(*)
+FROM tutorial.billboard_top_100_year_end 
+WHERE year > 1985
+GROUP BY artist
+ORDER BY count DESC
+LIMIT 10
+
+artist          count
+Rihanna           33
+Mariah Carey      33
+Madonna           28
+Ludacris          28
+R. Kelly          25
+Usher             25
+Lil Wayne         25
+Janet Jackson     23
+T-Pain            23
+Kanye West        22
+
+
+
+
+
+
+The total count of top 10 hits written by either Elvis, Madonna, the Beatles, or Elton John
+
+SELECT COUNT(artist)
+FROM tutorial.billboard_top_100_year_end 
+WHERE  year_rank <= 10 AND (artist = 'Elvis Presley' OR artist = 'Madonna' OR artist = 'Beatles' or artist = 'Elton John')
+
+24
+
+
